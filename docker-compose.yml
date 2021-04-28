@@ -1,0 +1,30 @@
+version : '3.4'
+
+services:
+    postgresultimo:
+        image: postgres:latest
+        environment:
+            POSTGRES_PASSWORD: 1234
+            POSTGRES_USER: user
+            POSTGRES_DB: mibanco
+        ports:
+            - 30000:5432
+        volumes:
+            - ./data_db:/var/lib/postgresql/data
+            
+    miapp:
+        image: eamquindio/mibanco:1.0
+        environment:
+            DB_USER: user
+            DB_PASS: 1234
+            DB_HOST: postgresultimo
+            DB_PORT: 5432
+            DB_NAME: mibanco
+        ports:
+            - 3000:3000
+        depends_on:
+            - postgresultimo 
+
+
+
+
